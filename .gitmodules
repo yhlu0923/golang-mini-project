@@ -1,0 +1,3 @@
+[submodule "LineBot"]
+	path = LineBot
+	url = ./LineBot
