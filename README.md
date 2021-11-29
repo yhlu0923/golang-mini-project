@@ -1,5 +1,9 @@
 # golang-mini-project
 
+## Our line official account
+- Add friend: 
+	- https://line.me/R/ti/p/@864gkoag
+
 ## Our ideas
 
 ### Topics
@@ -16,7 +20,6 @@ e.g
 假設使用者想看「狗」，只要輸入，「抽狗」
 我們的聊天機器人就會找一張狗的圖片傳送給使用者
 想看科基就「抽科基」...etc
-
 
 
 ## Websites/References
