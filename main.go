@@ -14,10 +14,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
@@ -33,6 +36,40 @@ func main() {
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
 }
+
+////////////////////////////////////////////////////////////////
+//////////////// Function of parsing picture ///////////////////
+////////////////////////////////////////////////////////////////
+func get_html(url string) string {
+	fmt.Println("Fetch Url", url)
+	client := &http.Client{}
+	request, _ := http.NewRequest("GET", url, nil)
+	request.Header.Set("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+	response, err := client.Do(request)
+	if err != nil {
+		fmt.Println("Http get err:", err)
+		return ""
+	}
+	if response.StatusCode != 200 {
+		fmt.Println("Http status:", response.StatusCode)
+		return ""
+	}
+	body, err := ioutil.ReadAll(response.Body)
+	response.Body.Close()
+	return string(body)
+}
+
+func parse(body string) string {
+	body = strings.Replace(body, "\n", "", -1)
+	img_reg := regexp.MustCompile(`<img class=(.*?)>`)
+	src_reg := regexp.MustCompile(`src="(.*?)"`)
+	img_url := src_reg.FindAllStringSubmatch(img_reg.FindAllStringSubmatch(body, -1)[1][1], -1)[0][1]
+	return img_url
+}
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
@@ -54,9 +91,25 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					log.Println("Quota err:", err)
 				}
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK! remain message:"+strconv.FormatInt(quota.Value, 10))).Do(); err != nil {
-					log.Print(err)
+				reply_string := message.ID + ":" + message.Text + " OK! remain message:" + strconv.FormatInt(quota.Value, 10)
+
+				function_type := message.Text[0:3]
+				switch function_type {
+				case "抽":
+					search := message.Text[3:]
+					html_body := get_html("https://www.google.com/search?q=" + search + "&tbm=isch")
+					img_url := parse(html_body)
+
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(img_url, img_url)).Do(); err != nil {
+						log.Print(err)
+					}
+
+				default:
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
+						log.Print(err)
+					}
 				}
+
 			}
 		}
 	}
