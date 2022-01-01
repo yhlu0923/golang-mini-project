@@ -18,65 +18,42 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
-	draw_picture "local-packages"
+	draw_picture "local-packages/draw-picture"
+	games "local-packages/games"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
 var bot *linebot.Client
 
+var (
+	flag_Game_GuessNum bool
+	endNum             int
+	answerNum          int
+)
+
+func init_all() {
+	flag_Game_GuessNum = false
+	endNum = 200
+	answerNum = 0
+}
+
 func main() {
-	// initialize our databases
+	init_all()
+	port := os.Getenv("PORT")
+	// // initialize our databases
+	// games.InitializeGames()
 
 	// initialize a line bot
 	var err error
 	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))
 	log.Println("Bot:", bot, " err:", err)
 	http.HandleFunc("/callback", callbackHandler)
-	port := os.Getenv("PORT")
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
 }
-
-////////////////////////////////////////////////////////////////
-//////////////// Function of parsing picture ///////////////////
-////////////////////////////////////////////////////////////////
-
-// func get_html(url string) string {
-// 	fmt.Println("Fetch Url", url)
-// 	client := &http.Client{}
-// 	request, _ := http.NewRequest("GET", url, nil)
-// 	request.Header.Set("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
-// 	response, err := client.Do(request)
-// 	if err != nil {
-// 		fmt.Println("Http get err:", err)
-// 		return ""
-// 	}
-// 	if response.StatusCode != 200 {
-// 		fmt.Println("Http status:", response.StatusCode)
-// 		return ""
-// 	}
-// 	body, err := ioutil.ReadAll(response.Body)
-// 	if err != nil {
-// 		fmt.Println("ReadAll get err:", err)
-// 		return ""
-// 	}
-// 	response.Body.Close()
-// 	return string(body)
-// }
-
-// func parse(body string) string {
-// 	body = strings.Replace(body, "\n", "", -1)
-// 	img_reg := regexp.MustCompile(`<img class=(.*?)>`)
-// 	src_reg := regexp.MustCompile(`src="(.*?)"`)
-// 	img_url := src_reg.FindAllStringSubmatch(img_reg.FindAllStringSubmatch(body, -1)[1][1], -1)[0][1]
-// 	return img_url
-// }
-
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
@@ -100,15 +77,61 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 				reply_string := message.ID + ":" + message.Text + " OK! remain message:" + strconv.FormatInt(quota.Value, 10)
 
-				function_type := message.Text[0:3]
+				find_space := strings.Index(message.Text, " ")
+				function_type := message.Text[0:find_space]
+				remain_message := message.Text[find_space+1:]
+
 				switch function_type {
 				case "抽":
-					search := message.Text[3:]
+					search := remain_message
 					html_body := draw_picture.Get_html("https://www.google.com/search?q=" + search + "&tbm=isch")
 					img_url := draw_picture.Parse(html_body)
 
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(img_url, img_url)).Do(); err != nil {
 						log.Print(err)
+					}
+
+				case "猜數字":
+					var tmp_str string
+					if !flag_Game_GuessNum { // new game
+						answerNum = games.CreateRandomNumber(endNum)
+						flag_Game_GuessNum = true
+						tmp_str = fmt.Sprintf("請輸入數字，範圍為: 0-%d", endNum)
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
+							log.Print(err)
+						}
+					} else { // continue game
+						command, err := strconv.Atoi(string(remain_message)) //string to int,并作输入格式判断
+						if err != nil {
+							tmp_str = fmt.Sprintf("格式不對，請輸入數字")
+							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
+								log.Print(err)
+							}
+						} else {
+
+							tmp_str = fmt.Sprintf("你你輸入的數字:", command)
+							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
+								log.Print(err)
+							}
+
+							if command == answerNum {
+								flag_Game_GuessNum = false
+								tmp_str = fmt.Sprintf("恭喜你，答對了~")
+								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
+									log.Print(err)
+								}
+							} else if command < answerNum {
+								tmp_str = fmt.Sprintf("你輸入的數字小於生成的數字，别灰心!再来一次~")
+								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
+									log.Print(err)
+								}
+							} else if command > answerNum {
+								tmp_str = fmt.Sprintf("你輸入的數字大於生成的數字，别灰心!再来一次~")
+								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
+									log.Print(err)
+								}
+							}
+						}
 					}
 
 				default:

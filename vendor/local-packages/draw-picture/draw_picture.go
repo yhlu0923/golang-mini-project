@@ -1,3 +1,5 @@
+// Function of parsing picture
+
 package draw_picture
 
 import (
