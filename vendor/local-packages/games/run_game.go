@@ -2,33 +2,30 @@ package games
 
 import (
 	"database/sql"
-	"log"
 	"math/rand"
-	"os"
 	"time"
-
-	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
+	// "github.com/gin-gonic/gin"
+	// "github.com/joho/godotenv"
+	// _ "github.com/lib/pq"
 )
 
 func InitializeGames() {
-	if err := godotenv.Load(); err != nil {
-		//Do nothing
-	}
-	port := "8080"
-	if v := os.Getenv("PORT"); len(v) > 0 {
-		port = v
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	//Do nothing
+	// }
+	// port := "8080"
+	// if v := os.Getenv("PORT"); len(v) > 0 {
+	// 	port = v
+	// }
 
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-	if err != nil {
-		log.Fatalf("Error opening database: %q", err)
-	}
-	ResetDBTable(db)
+	// db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	// if err != nil {
+	// 	log.Fatalf("Error opening database: %q", err)
+	// }
+	// ResetDBTable(db)
 
-	r := gin.Default()
-	r.RedirectFixedPath = true
+	// r := gin.Default()
+	// r.RedirectFixedPath = true
 	// r.GET("/bookshelf", getBooks(db))
 	// // [TODO] other method
 	// r.GET("/bookshelf/:id", getBook(db))
@@ -36,7 +33,7 @@ func InitializeGames() {
 	// r.DELETE("/bookshelf/:id", deleteBook(db))
 	// r.PUT("/bookshelf/:id", updateBook(db))
 
-	r.Run(":" + port)
+	// r.Run(":" + port)
 }
 
 func ResetDBTable(db *sql.DB) {
