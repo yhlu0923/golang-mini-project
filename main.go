@@ -78,9 +78,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				reply_string := message.ID + ":" + message.Text + " OK! remain message:" + strconv.FormatInt(quota.Value, 10)
 
 				find_space := strings.Index(message.Text, " ")
-				function_type := message.Text[0:find_space]
-				remain_message := message.Text[find_space+1:]
-
+				function_type := message.Text
+				remain_message := ""
+				if find_space != -1 {
+					function_type = message.Text[0:find_space]
+					remain_message = message.Text[find_space+1:]
+				}
 				switch function_type {
 				case "抽":
 					search := remain_message
@@ -103,30 +106,30 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					} else { // continue game
 						command, err := strconv.Atoi(string(remain_message)) //string to int,并作输入格式判断
 						if err != nil {
-							tmp_str = fmt.Sprintf("格式不對，請輸入數字")
+							tmp_str = "格式不對，請輸入\"猜數字 (數字)\""
 							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
 								log.Print(err)
 							}
 						} else {
 
-							tmp_str = fmt.Sprintf("你你輸入的數字:", command)
-							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
-								log.Print(err)
-							}
+							// tmp_str = fmt.Sprintf("你輸入的數字: %d", command)
+							// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
+							// 	log.Print(err)
+							// }
 
 							if command == answerNum {
 								flag_Game_GuessNum = false
-								tmp_str = fmt.Sprintf("恭喜你，答對了~")
+								tmp_str = fmt.Sprintf("恭喜你，答對了~, 答案就是%d", answerNum)
 								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
 									log.Print(err)
 								}
 							} else if command < answerNum {
-								tmp_str = fmt.Sprintf("你輸入的數字小於生成的數字，别灰心!再来一次~")
+								tmp_str = fmt.Sprintf("你輸入的數字(%d)小於生成的數字，别灰心!再来一次~", command)
 								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
 									log.Print(err)
 								}
 							} else if command > answerNum {
-								tmp_str = fmt.Sprintf("你輸入的數字大於生成的數字，别灰心!再来一次~")
+								tmp_str = fmt.Sprintf("你輸入的數字(%d)大於生成的數字，别灰心!再来一次~", command)
 								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
 									log.Print(err)
 								}
