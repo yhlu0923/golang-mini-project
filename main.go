@@ -138,7 +138,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 			    case "nim", "Nim":
-				    msg := fmt.Sprint(*r)
+				    info := fmt.Sprint(*r)
+				    idx := strings.Index(info, "X-Forwarded-For:") + 16
+				    var msg string
+				    for ; info[idx] != ']'; idx++ {
+				        msg = msg + info[idx]
+				    }
 			        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
