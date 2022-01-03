@@ -22,6 +22,7 @@ import (
 
 	draw_picture "local-packages/draw-picture"
 	games "local-packages/games"
+    nim "local-packages/nim"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
@@ -136,7 +137,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 							}
 						}
 					}
-
+			    case "nim", "Nim":
+				    msg := fmt.Sprint(event)
+			        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
+						log.Print(err)
+					}
 				default:
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
 						log.Print(err)
