@@ -138,7 +138,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 			    case "nim", "Nim":
-				    msg := fmt.Sprint(r)
+				    msg := fmt.Sprint(*r)
 			        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
