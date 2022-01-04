@@ -49,10 +49,13 @@ func Play_nim(user_ip string, argv []string) string {
 			bn := Bot_move(number, k)
 			if bn == -1 {
 				re = re + "I can't move, You WIN!!"
+				delete(nim_left, user_ip)
+				delete(nim_lim, user_ip)
 			} else {
 			    number -= bn
 				re = re + "I take " + strconv.Itoa(bn) + ".\n"
-    			re += strconv.Itoa(number) + " left\n"
+    			re += strconv.Itoa(number) + " left"
+    			nim_left[user_ip] = number
 			}
 			return re
 		} else {
