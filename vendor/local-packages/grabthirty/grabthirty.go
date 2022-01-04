@@ -89,7 +89,7 @@ func Bot_move(game_info GameInfo, n int) string {
 	tmp_str := ""
 	for i := 0; i < 4-n; i++ {
 		game_info.LastRecordNumber += 1
-		tmp_str += string(game_info.LastRecordNumber) + " "
+		tmp_str += fmt.Sprintf("%d", game_info.LastRecordNumber) + " "
 	}
 	return tmp_str
 }
