@@ -22,7 +22,7 @@ import (
 
 	draw_picture "local-packages/draw-picture"
 	games "local-packages/games"
-    nim "local-packages/games"
+    nim "local-packages/nim_game"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
