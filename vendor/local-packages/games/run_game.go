@@ -45,5 +45,6 @@ func GuessNumber(user_ip string, argv []string) string {
 
 	var game_info GameInfo
 	game_info.AnswerNum = CreateRandomNumber(EndNum)
+	InfoMap[user_ip] = game_info
 	return fmt.Sprintf("請輸入數字，範圍為: 0-%d", EndNum)
 }

@@ -57,6 +57,8 @@ func GrabThirty(user_ip string, argv []string) string {
 	game_info.TargetNumber = 30
 	game_info.LastRecordNumber = 0
 	game_info.user_ip = user_ip
+	InfoMap[user_ip] = game_info
+
 	return "Game start, you go first"
 }
 
