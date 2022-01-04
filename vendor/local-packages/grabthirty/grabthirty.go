@@ -18,6 +18,10 @@ type GameInfo struct {
 var EndNum int = 10
 var goodnumber []int = []int{1, 5, 9, 13, 17, 21, 25, 29}
 
+func Init() {
+	InfoMap = make(map[string]GameInfo)
+}
+
 func CreateRandomNumber(endNum int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return r.Intn(endNum)

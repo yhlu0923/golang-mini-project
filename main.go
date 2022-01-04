@@ -60,11 +60,16 @@ func parse_command(command string) []string {
 	return arg
 }
 
+func initialization() {
+	nim.Init()
+	games.Init()
+	grabthirty.Init()
+}
+
 func main() {
 	port := os.Getenv("PORT")
 	// // initialize our databases
 	// games.InitializeGames()
-	nim.Init()
 	// initialize a line bot
 	var err error
 	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))

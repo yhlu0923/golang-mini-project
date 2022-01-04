@@ -17,6 +17,10 @@ type GameInfo struct {
 
 var EndNum int = 10
 
+func Init() {
+	InfoMap = make(map[string]GameInfo)
+}
+
 func CreateRandomNumber(endNum int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return r.Intn(endNum)
