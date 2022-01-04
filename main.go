@@ -17,7 +17,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 
 	draw_picture "local-packages/draw-picture"
@@ -103,24 +102,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				quota, err := bot.GetMessageQuota().Do()
-				if err != nil {
-					log.Println("Quota err:", err)
-				}
-				reply_string := message.ID + ":" + message.Text + " OK! remain message:" + strconv.FormatInt(quota.Value, 10)
 
-				find_space := strings.Index(message.Text, " ")
-				function_type := message.Text
-				remain_message := ""
-				if find_space != -1 {
-					function_type = message.Text[0:find_space]
-					remain_message = message.Text[find_space+1:]
-				}
-
+				argv := parse_command(message.Text)
 				client_ip := get_ip(r)
-				switch function_type {
+				switch argv[0] {
 				case "抽":
-					search := remain_message
+					search := argv[1]
 					html_body := draw_picture.Get_html("https://www.google.com/search?q=" + search + "&tbm=isch")
 					img_url := draw_picture.Parse(html_body)
 
@@ -128,21 +115,20 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 
-				case "猜數字":
-					msg := games.GuessNumber(remain_message, &Flag_Game_GuessNum, &EndNum, &AnswerNum)
+				case "猜數字", "GuessNumber":
+					msg := games.GuessNumber(argv[1], &Flag_Game_GuessNum, &EndNum, &AnswerNum)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
 				case "nim", "Nim":
-					argv := parse_command(message.Text)
 					msg := nim.Play_nim(client_ip, argv)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
 				default:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
-						log.Print(err)
-					}
+					// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
+					// 	log.Print(err)
+					// }
 				}
 
 			}
