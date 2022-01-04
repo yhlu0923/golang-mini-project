@@ -34,6 +34,17 @@ func GrabThirty(user_ip string, argv []string) string {
 		return fmt.Sprintf("1. 使用gt, grabthirty, 搶30 當作前綴\n2. 從一開始往上喊，一次最多喊三個數字，最後搶到30的人就輸囉～\n3.剩下的根據指示操作就行嚕～")
 	}
 
+	if argv[1] == "new" {
+		delete(InfoMap, user_ip)
+		var game_info GameInfo
+		game_info.TargetNumber = 30
+		game_info.LastRecordNumber = 0
+		game_info.user_ip = user_ip
+		InfoMap[user_ip] = game_info
+
+		return "Game start, you go first"
+	}
+
 	if game_info, ok := InfoMap[user_ip]; ok {
 
 		replyNumLen := len(argv) - 1

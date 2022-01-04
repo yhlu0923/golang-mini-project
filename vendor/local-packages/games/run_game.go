@@ -32,6 +32,14 @@ func GuessNumber(user_ip string, argv []string) string {
 		return fmt.Sprintf("1. 使用gb, guessnumber, 猜數字 當作前綴\n2. 根據指示操作就行嚕～")
 	}
 
+	if argv[1] == "new" {
+		delete(InfoMap, user_ip)
+		var game_info GameInfo
+		game_info.AnswerNum = CreateRandomNumber(EndNum)
+		InfoMap[user_ip] = game_info
+		return fmt.Sprintf("請輸入數字，範圍為: 0-%d", EndNum)
+	}
+
 	if game_info, ok := InfoMap[user_ip]; ok {
 
 		if len(argv) == 1 {
