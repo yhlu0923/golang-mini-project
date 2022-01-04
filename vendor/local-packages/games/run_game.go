@@ -24,8 +24,15 @@ func CreateRandomNumber(endNum int) int {
 
 func GuessNumber(user_ip string, argv []string) string {
 
+	if argv[1] == "--help" {
+		return fmt.Sprintf("")
+	}
+
 	if game_info, ok := InfoMap[user_ip]; ok {
 
+		if len(argv) == 1 {
+			return "格式不對，請輸入\"猜數字 (數字)\""
+		}
 		command, err := strconv.Atoi(string(argv[1])) //string to int,并作输入格式判断
 		if err != nil {
 			return "格式不對，請輸入\"猜數字 (數字)\""
