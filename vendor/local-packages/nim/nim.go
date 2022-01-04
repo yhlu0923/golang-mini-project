@@ -54,8 +54,14 @@ func Play_nim(user_ip string, argv []string) string {
 			} else {
 			    number -= bn
 				re = re + "I take " + strconv.Itoa(bn) + ".\n"
-    			re += strconv.Itoa(number) + " left"
-    			nim_left[user_ip] = number
+				if number == 0 {
+				    re += "You lose"
+    				delete(nim_left, user_ip)
+	    			delete(nim_lim, user_ip)
+				} else {
+        			re += strconv.Itoa(number) + " left"
+        			nim_left[user_ip] = number
+        	    }
 			}
 			return re
 		} else {
