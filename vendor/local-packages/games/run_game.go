@@ -16,11 +16,7 @@ func CreateRandomNumber(endNum int) int {
 	return r.Intn(endNum)
 }
 
-func GuessNumber() {
-
-}
-
-func GuessNumber_Continue(remain_message string, Flag_Game_GuessNum *bool, EndNum *int, AnswerNum *int) string {
+func GuessNumber(remain_message string, Flag_Game_GuessNum *bool, EndNum *int, AnswerNum *int) string {
 
 	if !(*Flag_Game_GuessNum) { // new game
 		*AnswerNum = CreateRandomNumber(*EndNum)

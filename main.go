@@ -129,7 +129,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 				case "猜數字":
-					msg := games.GuessNumber_Continue(remain_message, &Flag_Game_GuessNum, &EndNum, &AnswerNum)
+					msg := games.GuessNumber(remain_message, &Flag_Game_GuessNum, &EndNum, &AnswerNum)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
