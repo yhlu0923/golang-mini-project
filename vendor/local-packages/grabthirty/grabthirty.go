@@ -73,7 +73,7 @@ func GrabThirty(user_ip string, argv []string) string {
 		// game_info.LastRecordNumber = reply_nums[replyNumLen-1]
 
 		InfoMap[user_ip] = game_info
-		msg := Bot_move(&game_info, replyNumLen)
+		msg := Bot_move(user_ip, replyNumLen)
 		return msg
 	}
 
@@ -86,16 +86,20 @@ func GrabThirty(user_ip string, argv []string) string {
 	return "Game start, you go first"
 }
 
-func Bot_move(game_info *GameInfo, n int) string {
+func Bot_move(user_ip string, n int) string {
+
+	game_info := InfoMap[user_ip]
 
 	for i := 0; i < len(goodnumber); i++ {
 		if goodnumber[i] == game_info.LastRecordNumber {
 			game_info.LastRecordNumber += 1
-			InfoMap[game_info.user_ip] = *game_info
+
 			if game_info.LastRecordNumber == game_info.TargetNumber {
 				delete(InfoMap, game_info.user_ip)
 				return fmt.Sprintf("You win the game!, I grabbed %d, I losed", game_info.TargetNumber)
 			}
+
+			InfoMap[user_ip] = game_info
 			return fmt.Sprintf("%d", game_info.LastRecordNumber)
 		}
 	}
@@ -103,8 +107,9 @@ func Bot_move(game_info *GameInfo, n int) string {
 	tmp_str := ""
 	for i := 0; i < 4-n; i++ {
 		game_info.LastRecordNumber += 1
-		InfoMap[game_info.user_ip] = *game_info
 		tmp_str += fmt.Sprintf("%d", game_info.LastRecordNumber) + " "
 	}
+
+	InfoMap[game_info.user_ip] = game_info
 	return tmp_str
 }
