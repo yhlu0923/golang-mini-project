@@ -17,6 +17,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	draw_picture "local-packages/draw-picture"
@@ -120,6 +121,17 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				case "搶三十", "搶30", "grabthirty", "gt":
 					msg := grabthirty.GrabThirty(client_ip, argv)
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
+						log.Print(err)
+					}
+				case "random":
+					msg := ""
+					endNum, err := strconv.Atoi(string(argv[1])) //string to int,并作输入格式判断
+					if err != nil {
+						msg = "格式不對，請輸入\"Random (數字)\""
+					} else {
+						msg = fmt.Sprintf("Random number from 0-%d is \"%d\"", endNum, games.CreateRandomNumber(endNum))
+					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
