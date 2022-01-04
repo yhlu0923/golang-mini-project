@@ -1,7 +1,6 @@
 package nim
 
 import (
-    "strings"
 	"strconv"
 	"math/rand"
 	"time"
@@ -11,8 +10,8 @@ var left map[string]int
 var lim map[string]int
 
 func new_game(user_ip string, n int) string {
-    left.delete(user_ip)
-    lim.delete(lim)
+    delete(left, user_ip)
+    delete(lim, user_ip)
     if n <= 4 {
         return "Invalid number!\nThe new game number must greater than 4!"
     }
@@ -31,7 +30,7 @@ func play_nim(user_ip string, argv []string) string {
         return "Invalid number!"
     }
     if argv[1] == "new" { // new game
-        return new_game(n)
+        return new_game(user_ip, n)
     } else { // move
         number, flag := left[user_ip]
         k, _ := lim[user_ip]
@@ -42,7 +41,7 @@ func play_nim(user_ip string, argv []string) string {
             re := "The number was " + strconv.Itoa(number) + ".\n"
             number -= n;
             re = re + "You take" + strconv.Itoa(n) + ".\n"
-            bn = bot_move(number, k)
+            bn := bot_move(number, k)
             if bn == -1 {
                 re := "I can't move, You WIN!!"
             } else {
@@ -56,11 +55,16 @@ func play_nim(user_ip string, argv []string) string {
     return "Some error occur!"
 }
 
-func bot_move(n int, k int) {
-    if n % k != 0 {
-        return n % k
+func bot_move(n int, k int) int {
+    var re int
+    if n == 0 {
+        re = -1;
+    } else if n % k != 0 {
+        re = n % k
+    } else if {
+        re = rnd(k) + 1
     }
-    return rnd(k) + 1
+    return re
 }
 
 func rnd(endNum int) int {
