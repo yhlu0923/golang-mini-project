@@ -8,32 +8,43 @@ import (
 )
 
 /* Guess num */
+
+var InfoMap map[string]GameInfo
+
+type GameInfo struct {
+	AnswerNum int
+}
+
+var EndNum int = 10
+
 func CreateRandomNumber(endNum int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return r.Intn(endNum)
 }
 
-func GuessNumber(remain_message string, Flag_Game_GuessNum *bool, EndNum *int, AnswerNum *int) string {
+func GuessNumber(user_ip string, argv []string) string {
 
-	if !(*Flag_Game_GuessNum) { // new game
-		*AnswerNum = CreateRandomNumber(*EndNum)
-		*Flag_Game_GuessNum = true
-		return fmt.Sprintf("請輸入數字，範圍為: 0-%d", *EndNum)
-	} else { // continue game
+	remain_message := argv[1]
+	if game_info, ok := InfoMap[user_ip]; ok {
+
 		command, err := strconv.Atoi(string(remain_message)) //string to int,并作输入格式判断
 		if err != nil {
 			return "格式不對，請輸入\"猜數字 (數字)\""
 		} else {
 
-			if command == *AnswerNum {
-				*Flag_Game_GuessNum = false
-				return fmt.Sprintf("恭喜你，答對了~, 答案就是%d", *AnswerNum)
-			} else if command < *AnswerNum {
+			if command == game_info.AnswerNum {
+				delete(InfoMap, user_ip)
+				return fmt.Sprintf("恭喜你，答對了~, 答案就是%d", game_info.AnswerNum)
+			} else if command < game_info.AnswerNum {
 				return fmt.Sprintf("你輸入的數字(%d)小於生成的數字，别灰心!再来一次~", command)
-			} else if command > *AnswerNum {
+			} else if command > game_info.AnswerNum {
 				return fmt.Sprintf("你輸入的數字(%d)大於生成的數字，别灰心!再来一次~", command)
 			}
 		}
 		return "Somethong went wrong"
 	}
+
+	var game_info GameInfo
+	game_info.AnswerNum = CreateRandomNumber(EndNum)
+	return fmt.Sprintf("請輸入數字，範圍為: 0-%d", EndNum)
 }
