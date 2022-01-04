@@ -36,16 +36,16 @@ func play_nim(user_ip string, argv []string) string {
         k, _ := lim[user_ip]
         if flag {
             if number < n || number < k {
-                return "invalid move!"
+                return "Invalid move!"
             }
             re := "The number was " + strconv.Itoa(number) + ".\n"
             number -= n;
             re = re + "You take" + strconv.Itoa(n) + ".\n"
             bn := bot_move(number, k)
             if bn == -1 {
-                re := "I can't move, You WIN!!"
+                re = re + "I can't move, You WIN!!"
             } else {
-                re = "I take " + strconv.Itoa(bn) + "."
+                re = re + "I take " + strconv.Itoa(bn) + "."
             }
             return re;
         } else {
