@@ -129,19 +129,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 				case "猜數字":
-					var tmp_str string
-					if !Flag_Game_GuessNum { // new game
-						AnswerNum = games.CreateRandomNumber(EndNum)
-						Flag_Game_GuessNum = true
-						tmp_str = fmt.Sprintf("請輸入數字，範圍為: 0-%d", EndNum)
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
-							log.Print(err)
-						}
-					} else { // continue game
-						msg := games.GuessNumber_Continue(remain_message, &Flag_Game_GuessNum, AnswerNum)
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
-							log.Print(err)
-						}
+					msg := games.GuessNumber_Continue(remain_message, &Flag_Game_GuessNum, &EndNum, &AnswerNum)
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
+						log.Print(err)
 					}
 				case "nim", "Nim":
 					argv := parse_command(message.Text)
