@@ -64,7 +64,7 @@ func main() {
 	port := os.Getenv("PORT")
 	// // initialize our databases
 	// games.InitializeGames()
-    nim.Init()
+	nim.Init()
 	// initialize a line bot
 	var err error
 	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))
@@ -119,9 +119,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				default:
-					// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
-					// 	log.Print(err)
-					// }
+					reply_string := argv[0]
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
+						log.Print(err)
+					}
 				}
 
 			}
