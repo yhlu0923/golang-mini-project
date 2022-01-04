@@ -9,6 +9,11 @@ import (
 var left map[string]int
 var lim map[string]int
 
+func Init() {
+    left = make(map[string]int)
+    lim = make(map[string]int)
+}
+
 func New_game(user_ip string, n int) string {
 	delete(left, user_ip)
 	delete(lim, user_ip)
@@ -16,7 +21,6 @@ func New_game(user_ip string, n int) string {
 		return "Invalid number!\nThe new game number must greater than 4!"
 	}
 	left[user_ip] = n
-	return "test"
 	k := Rnd(n / 2 - 2) + 2
 	lim[user_ip] = k
 	return "New nim game! New number is: " + strconv.Itoa(n) + ".\nYour can take number from 1 to " + strconv.Itoa(k) + "\nYou take first!"
