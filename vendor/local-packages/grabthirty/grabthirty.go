@@ -1,17 +1,28 @@
 package grabthirty
 
 import (
-	"strconv"
+	"math/rand"
+	"time"
 )
 
-var left map[string]int
-var lim map[string]int
+var InfoMap map[string]GameInfo
+
+type GameInfo struct {
+	AnswerNum int
+}
+
+var EndNum int = 10
+
+func CreateRandomNumber(endNum int) int {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	return r.Intn(endNum)
+}
 
 func New_game(user_ip string, n int) string {
-	return "New nim game, new number is: " + strconv.Itoa(n) + ".\nYour can take number from 1 to " + strconv.Itoa(k) + "\nYou take first!\n"
+	return "New Game"
 }
 
 /* GrabThirty */
 func GrabThirty(user_ip string, argv []string) string {
-
+	return "Running GrabThirty"
 }

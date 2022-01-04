@@ -103,7 +103,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 
-				case "猜數字", "guessnumber", "GuessNumber":
+				case "猜數字", "guessnumber", "GuessNumber", "gn":
 					msg := games.GuessNumber(client_ip, argv)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
@@ -113,7 +113,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
-				case "搶三十", "搶30", "grabthirty":
+				case "搶三十", "搶30", "grabthirty", "gt":
 					msg := grabthirty.GrabThirty(client_ip, argv)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
