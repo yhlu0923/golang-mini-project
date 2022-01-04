@@ -25,7 +25,7 @@ func CreateRandomNumber(endNum int) int {
 func GuessNumber(user_ip string, argv []string) string {
 
 	if argv[1] == "--help" {
-		return fmt.Sprintf("")
+		return fmt.Sprintf("1. 使用gb, guessnumber, 猜數字 當作前綴\n2. 根據指示操作就行嚕～")
 	}
 
 	if game_info, ok := InfoMap[user_ip]; ok {
