@@ -31,7 +31,7 @@ func CreateRandomNumber(endNum int) int {
 func GrabThirty(user_ip string, argv []string) string {
 
 	if argv[1] == "--help" {
-		return fmt.Sprintf("1. 使用gt, grabthirty, 搶30 當作前綴\n2. 從一開始往上喊，一次最多喊三個數字，最後搶到30的人就輸囉～\n 3.剩下的根據指示操作就行嚕～")
+		return fmt.Sprintf("1. 使用gt, grabthirty, 搶30 當作前綴\n2. 從一開始往上喊，一次最多喊三個數字，最後搶到30的人就輸囉～\n3.剩下的根據指示操作就行嚕～")
 	}
 
 	if game_info, ok := InfoMap[user_ip]; ok {
@@ -60,7 +60,7 @@ func GrabThirty(user_ip string, argv []string) string {
 		}
 		game_info.LastRecordNumber = reply_nums[replyNumLen-1]
 
-		msg := Bot_move(game_info, replyNumLen)
+		msg := Bot_move(&game_info, replyNumLen)
 		return msg
 	}
 
@@ -73,7 +73,7 @@ func GrabThirty(user_ip string, argv []string) string {
 	return "Game start, you go first"
 }
 
-func Bot_move(game_info GameInfo, n int) string {
+func Bot_move(game_info *GameInfo, n int) string {
 
 	for i := 0; i < len(goodnumber); i++ {
 		if goodnumber[i] == game_info.LastRecordNumber {
