@@ -15,7 +15,7 @@ type GameInfo struct {
 	AnswerNum int
 }
 
-var EndNum int = 200
+var EndNum int = 10
 
 func CreateRandomNumber(endNum int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
