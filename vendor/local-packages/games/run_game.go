@@ -24,10 +24,9 @@ func CreateRandomNumber(endNum int) int {
 
 func GuessNumber(user_ip string, argv []string) string {
 
-	remain_message := argv[1]
 	if game_info, ok := InfoMap[user_ip]; ok {
 
-		command, err := strconv.Atoi(string(remain_message)) //string to int,并作输入格式判断
+		command, err := strconv.Atoi(string(argv[1])) //string to int,并作输入格式判断
 		if err != nil {
 			return "格式不對，請輸入\"猜數字 (數字)\""
 		} else {
