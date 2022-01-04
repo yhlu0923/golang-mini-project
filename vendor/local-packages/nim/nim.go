@@ -22,7 +22,7 @@ func New_game(user_ip string, n int) string {
 }
 
 func Play_nim(user_ip string, argv []string) string {
-	if len(argv) < 3 || (argv[1] != "new" || argv[1] != "take") {
+	if len(argv) < 3 || (argv[1] != "new" && argv[1] != "take") {
 		return "Usage: nim new|take <number>"
 	}
 	n, err := strconv.Atoi(argv[1])
