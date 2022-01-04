@@ -40,7 +40,7 @@ func Play_nim(user_ip string, argv []string) string {
 		number, flag := nim_left[user_ip]
 		k, _ := nim_lim[user_ip]
 		if flag {
-			if number < n || number < k {
+			if number < n || k < n {
 				return "Invalid move!"
 			}
 			re := "The number was " + strconv.Itoa(number) + ".\n"
