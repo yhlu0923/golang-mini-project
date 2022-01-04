@@ -21,24 +21,13 @@ import (
 
 	draw_picture "local-packages/draw-picture"
 	games "local-packages/games"
+	grabthirty "local-packages/grabthirty"
 	nim "local-packages/nim"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
 var bot *linebot.Client
-
-var (
-	Flag_Game_GuessNum bool
-	EndNum             int
-	AnswerNum          int
-)
-
-func init_all() {
-	Flag_Game_GuessNum = false
-	EndNum = 200
-	AnswerNum = 0
-}
 
 func get_ip(r *http.Request) string {
 	info := fmt.Sprint(*r)
@@ -72,7 +61,6 @@ func parse_command(command string) []string {
 }
 
 func main() {
-	init_all()
 	port := os.Getenv("PORT")
 	// // initialize our databases
 	// games.InitializeGames()
@@ -116,7 +104,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 				case "猜數字", "guessnumber", "GuessNumber":
-					msg := games.GuessNumber(argv[1], &Flag_Game_GuessNum, &EndNum, &AnswerNum)
+					msg := games.GuessNumber(client_ip, argv)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
@@ -125,7 +113,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
-				case "搶三十", "搶30", "grab_thiry":
+				case "搶三十", "搶30", "grabthirty":
+					msg := grabthirty.GrabThirty(client_ip, argv)
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
+						log.Print(err)
+					}
 				default:
 					// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
 					// 	log.Print(err)
