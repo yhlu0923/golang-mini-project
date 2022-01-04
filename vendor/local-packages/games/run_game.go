@@ -1,50 +1,11 @@
 package games
 
 import (
-	"database/sql"
+	"fmt"
 	"math/rand"
+	"strconv"
 	"time"
-	// "github.com/gin-gonic/gin"
-	// "github.com/joho/godotenv"
-	// _ "github.com/lib/pq"
 )
-
-func InitializeGames() {
-	// if err := godotenv.Load(); err != nil {
-	// 	//Do nothing
-	// }
-	// port := "8080"
-	// if v := os.Getenv("PORT"); len(v) > 0 {
-	// 	port = v
-	// }
-
-	// db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-	// if err != nil {
-	// 	log.Fatalf("Error opening database: %q", err)
-	// }
-	// ResetDBTable(db)
-
-	// r := gin.Default()
-	// r.RedirectFixedPath = true
-	// r.GET("/bookshelf", getBooks(db))
-	// // [TODO] other method
-	// r.GET("/bookshelf/:id", getBook(db))
-	// r.POST("/bookshelf", addBook(db))
-	// r.DELETE("/bookshelf/:id", deleteBook(db))
-	// r.PUT("/bookshelf/:id", updateBook(db))
-
-	// r.Run(":" + port)
-}
-
-func ResetDBTable(db *sql.DB) {
-	tmp_tableName := "games_Grab30"
-	if _, err := db.Exec("DROP TABLE IF EXISTS " + tmp_tableName); err != nil {
-		return
-	}
-	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS " + "tmp_tableName" + " (id SERIAL PRIMARY KEY, username VARCHAR(100), pages VARCHAR(10))"); err != nil {
-		return
-	}
-}
 
 // Guess num
 
@@ -53,4 +14,27 @@ func ResetDBTable(db *sql.DB) {
 func CreateRandomNumber(endNum int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return r.Intn(endNum)
+}
+
+func GuessNumber() {
+
+}
+
+func GuessNumber_Continue(remain_message string, Flag_Game_GuessNum *bool, AnswerNum int) string {
+
+	command, err := strconv.Atoi(string(remain_message)) //string to int,并作输入格式判断
+	if err != nil {
+		return "格式不對，請輸入\"猜數字 (數字)\""
+	} else {
+
+		if command == AnswerNum {
+			*Flag_Game_GuessNum = false
+			return fmt.Sprintf("恭喜你，答對了~, 答案就是%d", AnswerNum)
+		} else if command < AnswerNum {
+			return fmt.Sprintf("你輸入的數字(%d)小於生成的數字，别灰心!再来一次~", command)
+		} else if command > AnswerNum {
+			return fmt.Sprintf("你輸入的數字(%d)大於生成的數字，别灰心!再来一次~", command)
+		}
+	}
+	return "Somethong went wrong"
 }

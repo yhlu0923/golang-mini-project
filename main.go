@@ -30,15 +30,15 @@ import (
 var bot *linebot.Client
 
 var (
-	flag_Game_GuessNum bool
-	endNum             int
-	answerNum          int
+	Flag_Game_GuessNum bool
+	EndNum             int
+	AnswerNum          int
 )
 
 func init_all() {
-	flag_Game_GuessNum = false
-	endNum = 200
-	answerNum = 0
+	Flag_Game_GuessNum = false
+	EndNum = 200
+	AnswerNum = 0
 }
 
 func get_ip(r *http.Request) string {
@@ -130,44 +130,17 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 				case "猜數字":
 					var tmp_str string
-					if !flag_Game_GuessNum { // new game
-						answerNum = games.CreateRandomNumber(endNum)
-						flag_Game_GuessNum = true
-						tmp_str = fmt.Sprintf("請輸入數字，範圍為: 0-%d", endNum)
+					if !Flag_Game_GuessNum { // new game
+						AnswerNum = games.CreateRandomNumber(EndNum)
+						Flag_Game_GuessNum = true
+						tmp_str = fmt.Sprintf("請輸入數字，範圍為: 0-%d", EndNum)
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
 							log.Print(err)
 						}
 					} else { // continue game
-						command, err := strconv.Atoi(string(remain_message)) //string to int,并作输入格式判断
-						if err != nil {
-							tmp_str = "格式不對，請輸入\"猜數字 (數字)\""
-							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
-								log.Print(err)
-							}
-						} else {
-
-							// tmp_str = fmt.Sprintf("你輸入的數字: %d", command)
-							// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
-							// 	log.Print(err)
-							// }
-
-							if command == answerNum {
-								flag_Game_GuessNum = false
-								tmp_str = fmt.Sprintf("恭喜你，答對了~, 答案就是%d", answerNum)
-								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
-									log.Print(err)
-								}
-							} else if command < answerNum {
-								tmp_str = fmt.Sprintf("你輸入的數字(%d)小於生成的數字，别灰心!再来一次~", command)
-								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
-									log.Print(err)
-								}
-							} else if command > answerNum {
-								tmp_str = fmt.Sprintf("你輸入的數字(%d)大於生成的數字，别灰心!再来一次~", command)
-								if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(tmp_str)).Do(); err != nil {
-									log.Print(err)
-								}
-							}
+						msg := games.GuessNumber_Continue(remain_message, &Flag_Game_GuessNum, AnswerNum)
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
+							log.Print(err)
 						}
 					}
 				case "nim", "Nim":
