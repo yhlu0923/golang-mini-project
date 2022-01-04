@@ -17,8 +17,8 @@ func Init() {
 func New_game(user_ip string, n int) string {
 	delete(nim_left, user_ip)
 	delete(nim_lim, user_ip)
-	if n <= 4 {
-		return "Invalid number!\nThe new game number must greater than 4!"
+	if n <= 5 {
+		return "Invalid number!\nThe new game number must greater than 5!"
 	}
 	nim_left[user_ip] = n
 	k := Rnd(n / 2 - 2) + 2
