@@ -61,7 +61,7 @@ func bot_move(n int, k int) int {
         re = -1;
     } else if n % k != 0 {
         re = n % k
-    } else if {
+    } else {
         re = rnd(k) + 1
     }
     return re
