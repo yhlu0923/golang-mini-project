@@ -90,18 +90,19 @@ func Bot_move(user_ip string, reply_nums []int) string {
 
 	n := len(reply_nums)
 	game_info := InfoMap[user_ip]
+	flag_num := 0
 
 	for i := 0; i < len(goodnumber); i++ {
 		if goodnumber[i] == game_info.LastRecordNumber {
-			game_info.LastRecordNumber = reply_nums[len(reply_nums)-1] + 1
-			InfoMap[user_ip] = game_info
+			// game_info.LastRecordNumber = reply_nums[len(reply_nums)-1] + 1
+			// InfoMap[user_ip] = game_info
+			flag_num = reply_nums[len(reply_nums)-1] + 1
 
-			if game_info.LastRecordNumber == game_info.TargetNumber {
+			if flag_num == game_info.TargetNumber {
 				delete(InfoMap, game_info.user_ip)
 				return fmt.Sprintf("You win the game!, I grabbed %d, I losed", game_info.TargetNumber)
 			}
-
-			return fmt.Sprintf("%d", game_info.LastRecordNumber)
+			// return fmt.Sprintf("%d", game_info.LastRecordNumber)
 		}
 	}
 
@@ -111,9 +112,21 @@ func Bot_move(user_ip string, reply_nums []int) string {
 	}
 
 	tmp_str += "\nI choose:"
-	for i := 0; i < 4-n; i++ {
-		game_info.LastRecordNumber += 1
-		tmp_str += fmt.Sprintf(" %d", game_info.LastRecordNumber)
+	if flag_num == 0 {
+		tmp_str += fmt.Sprintf(" %d", flag_num)
+	} else {
+		tmp_num := 0
+		for i := 0; i < len(goodnumber); i++ {
+			if game_info.LastRecordNumber-game_info.TargetNumber > 0 {
+				tmp_num = game_info.LastRecordNumber - game_info.TargetNumber
+				break
+			}
+		}
+
+		for i := 0; i < tmp_num; i++ {
+			game_info.LastRecordNumber += 1
+			tmp_str += fmt.Sprintf(" %d", game_info.LastRecordNumber)
+		}
 	}
 
 	InfoMap[game_info.user_ip] = game_info

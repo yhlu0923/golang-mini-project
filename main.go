@@ -125,6 +125,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				case "random":
+					if argv[1] == "--help" {
+						msg := "1. 使用gb, guessnumber, 猜數字 當作前綴\n2. 根據指示操作就行嚕～"
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
+							log.Print(err)
+						}
+						return
+					}
+
 					msg := ""
 					endNum, err := strconv.Atoi(string(argv[1])) //string to int,并作输入格式判断
 					if err != nil {
