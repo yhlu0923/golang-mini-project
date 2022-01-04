@@ -17,8 +17,9 @@ func new_game(user_ip string, n int) string {
         return "Invalid number!\nThe new game number must greater than 4!"
     }
     left[user_ip] = n
-    lim[user_ip] = rnd(n / 2 - 2) + 2
-    return "New nim game, new number is: " + strconv.Itoa(n) + ".\nYou take first!\n"
+    k := rnd(n / 2 - 2) + 2
+    lim[user_ip] = k
+    return "New nim game, new number is: " + strconv.Itoa(n) + ".\nYour can take number from 1 to " + strconv.Itoa(k) + "\nYou take first!\n"
 }
 
 func play_nim(user_ip string, argv []string) string {
@@ -31,7 +32,7 @@ func play_nim(user_ip string, argv []string) string {
     }
     if argv[1] == "new" { // new game
         return new_game(n)
-    } else {
+    } else { // move
         number, flag := left[user_ip]
         k, _ := lim[user_ip]
         if flag {
