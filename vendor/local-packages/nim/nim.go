@@ -6,23 +6,23 @@ import (
 	"time"
 )
 
-var left map[string]int
-var lim map[string]int
+var nim_left map[string]int
+var nim_lim map[string]int
 
 func Init() {
-    left = make(map[string]int)
-    lim = make(map[string]int)
+    nim_left = make(map[string]int)
+    nim_lim = make(map[string]int)
 }
 
 func New_game(user_ip string, n int) string {
-	delete(left, user_ip)
-	delete(lim, user_ip)
+	delete(nim_left, user_ip)
+	delete(nim_lim, user_ip)
 	if n <= 4 {
 		return "Invalid number!\nThe new game number must greater than 4!"
 	}
-	left[user_ip] = n
+	nim_left[user_ip] = n
 	k := Rnd(n / 2 - 2) + 2
-	lim[user_ip] = k
+	nim_lim[user_ip] = k
 	return "New nim game! New number is: " + strconv.Itoa(n) + ".\nYour can take number from 1 to " + strconv.Itoa(k) + "\nYou take first!"
 }
 
@@ -37,8 +37,8 @@ func Play_nim(user_ip string, argv []string) string {
 	if argv[1] == "new" { // new game
 		return New_game(user_ip, n)
 	} else { // move
-		number, flag := left[user_ip]
-		k, _ := lim[user_ip]
+		number, flag := nim_left[user_ip]
+		k, _ := nim_lim[user_ip]
 		if flag {
 			if number < n || number < k {
 				return "Invalid move!"
