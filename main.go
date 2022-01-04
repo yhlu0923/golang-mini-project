@@ -117,7 +117,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					remain_message = message.Text[find_space+1:]
 				}
 				
-				client_ip := getip(r)
+				client_ip := get_ip(r)
 				switch function_type {
 				case "抽":
 					search := remain_message
@@ -172,7 +172,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 			    case "nim", "Nim":
 			        argv := parse_command(message.Text)
-			        msg := nim.play_nim(ip, arg)
+			        msg := nim.play_nim(ip, argv)
 			        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
