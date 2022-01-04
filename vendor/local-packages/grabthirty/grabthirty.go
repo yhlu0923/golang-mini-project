@@ -53,8 +53,8 @@ func GrabThirty(user_ip string, argv []string) string {
 		}
 
 		var reply_nums []int
-		for i := 1; i < len(argv); i++ {
-			tmp_num, err := strconv.Atoi(string(argv[i])) //string to int,并作输入格式判断
+		for i := 0; i < replyNumLen; i++ {
+			tmp_num, err := strconv.Atoi(string(argv[i+1])) //string to int,并作输入格式判断
 			if err != nil {
 				return "格式不對，請輸入\"guessnumber (數字)...(數字)\""
 			}
@@ -73,7 +73,7 @@ func GrabThirty(user_ip string, argv []string) string {
 		// game_info.LastRecordNumber = reply_nums[replyNumLen-1]
 
 		InfoMap[user_ip] = game_info
-		msg := Bot_move(user_ip, replyNumLen)
+		msg := Bot_move(user_ip, reply_nums)
 		return msg
 	}
 
@@ -86,8 +86,9 @@ func GrabThirty(user_ip string, argv []string) string {
 	return "Game start, you go first"
 }
 
-func Bot_move(user_ip string, n int) string {
+func Bot_move(user_ip string, reply_nums []int) string {
 
+	n := len(reply_nums)
 	game_info := InfoMap[user_ip]
 
 	for i := 0; i < len(goodnumber); i++ {
@@ -104,10 +105,14 @@ func Bot_move(user_ip string, n int) string {
 		}
 	}
 
-	tmp_str := ""
+	tmp_str := "You choose:"
+	for i := 0; i < n; i++ {
+		tmp_str += fmt.Sprintf(" %d", reply_nums[i])
+	}
+	tmp_str += "\nI choose:"
 	for i := 0; i < 4-n; i++ {
 		game_info.LastRecordNumber += 1
-		tmp_str += fmt.Sprintf("%d", game_info.LastRecordNumber) + " "
+		tmp_str += fmt.Sprintf(" %d", game_info.LastRecordNumber)
 	}
 
 	InfoMap[game_info.user_ip] = game_info
