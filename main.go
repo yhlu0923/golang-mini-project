@@ -115,7 +115,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 
-				case "猜數字", "GuessNumber":
+				case "猜數字", "guessnumber", "GuessNumber":
 					msg := games.GuessNumber(argv[1], &Flag_Game_GuessNum, &EndNum, &AnswerNum)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
@@ -125,6 +125,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
+				case "搶三十", "搶30", "grab_thiry":
 				default:
 					// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
 					// 	log.Print(err)

@@ -7,10 +7,7 @@ import (
 	"time"
 )
 
-// Guess num
-
-//生成规定范围内的整数
-//设置起始数字范围，0开始,endNum截止
+/* Guess num */
 func CreateRandomNumber(endNum int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return r.Intn(endNum)
