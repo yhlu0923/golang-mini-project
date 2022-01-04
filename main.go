@@ -41,6 +41,37 @@ func init_all() {
 	answerNum = 0
 }
 
+func get_ip(r *http.Request) string {
+    info := fmt.Sprint(*r)
+	idx := strings.Index(info, "X-Forwarded-For:") + 17
+	var ip string
+	for ; info[idx] != ']'; idx++ {
+	    ip = ip + string(info[idx])
+	}
+	return ip
+}
+
+func parse_command(command string) []string {
+    command = command + " "
+    command = strings.ToLower(command)
+    command = strings.Replace(command, "\t", " ", -1)
+    
+    var arg []string
+    last := -1;
+    for true {
+        idx := strings.Index(command[last + 1:], " ")
+        if idx == -1 {
+            break
+        }
+        idx += last + 1
+        if idx - last > 1 {
+            arg = append(arg, command[last + 1 : idx])
+        }
+        last = idx
+    }
+    return arg
+}
+
 func main() {
 	init_all()
 	port := os.Getenv("PORT")
@@ -85,6 +116,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					function_type = message.Text[0:find_space]
 					remain_message = message.Text[find_space+1:]
 				}
+				
+				client_ip := getip(r)
 				switch function_type {
 				case "抽":
 					search := remain_message
@@ -138,12 +171,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 			    case "nim", "Nim":
-				    info := fmt.Sprint(*r)
-				    idx := strings.Index(info, "X-Forwarded-For:") + 16
-				    var msg string
-				    for ; info[idx] != ']'; idx++ {
-				        msg = msg + string(info[idx])
-				    }
+			        argv := parse_command(message.Text)
+			        msg := nim.play_nim(ip, arg)
 			        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
