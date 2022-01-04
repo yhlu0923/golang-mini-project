@@ -45,12 +45,14 @@ func Play_nim(user_ip string, argv []string) string {
 			}
 			re := "The number was " + strconv.Itoa(number) + ".\n"
 			number -= n
-			re = re + "You take" + strconv.Itoa(n) + ".\n"
+			re = re + "You take " + strconv.Itoa(n) + ".\n"
 			bn := Bot_move(number, k)
 			if bn == -1 {
 				re = re + "I can't move, You WIN!!"
 			} else {
-				re = re + "I take " + strconv.Itoa(bn) + "."
+			    number -= bn
+				re = re + "I take " + strconv.Itoa(bn) + ".\n"
+    			re += strconv.Itoa(number) + " left\n"
 			}
 			return re
 		} else {
@@ -64,8 +66,8 @@ func Bot_move(n int, k int) int {
 	var re int
 	if n == 0 {
 		re = -1
-	} else if n%k != 0 {
-		re = n % k
+	} else if n % (k + 1) != 0 {
+		re = n % (k + 1)
 	} else {
 		re = Rnd(k) + 1
 	}
