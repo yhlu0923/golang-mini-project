@@ -121,6 +121,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
+				case "nim2":
+					msg := nim2.Play_nim(client_ip, argv)
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
+						log.Print(err)
+					}
 				case "搶三十", "搶30", "grabthirty", "gt":
 					msg := grabthirty.GrabThirty(client_ip, argv)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
