@@ -113,6 +113,7 @@ func Bot_move(user_ip string, reply_nums []int) string {
 
 	tmp_str += "\nI choose:"
 	if flag_num != 0 {
+		game_info.LastRecordNumber = flag_num
 		tmp_str += fmt.Sprintf(" %d", flag_num)
 	} else {
 		tmp_num := 0
