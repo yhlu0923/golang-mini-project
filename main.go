@@ -114,7 +114,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				    help_msg += "4. grabthirty\n"
 				    help_msg += "小工具:\n"
 				    help_msg += "1.抽\n"
-				    help_msg += "1.random"
+				    help_msg += "2.random"
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(help_msg)).Do(); err != nil {
 						log.Print(err)
 					}
