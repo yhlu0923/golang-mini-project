@@ -106,8 +106,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				switch argv[0] {
 				case "抽":
 					search := argv[1]
-					html_body := get_html("https://tw.images.search.yahoo.com/search/images?p=" + search)
-                    img_url := Parse(html_body)
+					html_body := draw_picture.Get_html("https://tw.images.search.yahoo.com/search/images?p=" + search)
+                    img_url := draw_picture.Parse(html_body)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(img_url, img_url)).Do(); err != nil {
 						log.Print(err)
 					}

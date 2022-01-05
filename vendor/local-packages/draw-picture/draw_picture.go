@@ -9,7 +9,7 @@ import (
 	"math/rand"
 )
 
-func get_html (url string) string {
+func Get_html (url string) string {
 	client := &http.Client{}
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
