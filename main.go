@@ -59,8 +59,8 @@ func parse_command(command string) []string {
 		last = idx
 	}
 	if len(argv) != 0 {
-    	argv[0] = strings.ToLower(argv[0])
-    }
+		argv[0] = strings.ToLower(argv[0])
+	}
 	return argv
 }
 
@@ -135,7 +135,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				case "random":
 					if argv[1] == "--help" {
-						msg := "1. 使用gb, guessnumber, 猜數字 當作前綴\n2. 根據指示操作就行嚕～"
+						msg := "1. Use random as the first argument\n2. Followed with a number which is the end of range you desire.\n3. Get the random number!"
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 							log.Print(err)
 						}
