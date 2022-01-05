@@ -41,7 +41,7 @@ func New_game(user_ip string, n int) string {
         }
 	}
 	nim_lim[user_ip] = arr
-	return_msg := "開始新的 nim! 目前有 " + strconv.Itoa(n) + " 顆石頭.\n你每次可以拿"
+	return_msg := "開始新的 nim2! 目前有 " + strconv.Itoa(n) + " 顆石頭.\n你每次可以拿"
 	var tmp []int
 	for i, _ := range arr {
 	    tmp = append(tmp, i)
@@ -57,13 +57,13 @@ func New_game(user_ip string, n int) string {
 func Play_nim(user_ip string, argv []string) string {
     if len(argv) > 1 && argv[1] == "--help" { // rule
         rule := ""
-        rule += "1. 使用 \"nim new <number>\" 來開始一個初始為 <number> 顆石頭的遊戲\n"
-        rule += "2. 使用 \"nim take <number>\" 取走 <number> 顆石頭\n"
+        rule += "1. 使用 \"nim2 new <number>\" 來開始一個初始為 <number> 顆石頭的遊戲\n"
+        rule += "2. 使用 \"nim2 take <number>\" 取走 <number> 顆石頭\n"
         rule += "3. 無法拿石頭者敗"
         return rule
     }
 	if len(argv) < 3 || (argv[1] != "new" && argv[1] != "take") {
-		return "使用方法: nim new|take <number>"
+		return "使用方法: nim2 new|take <number>"
 	}
 	n, err := strconv.Atoi(argv[2])
 	if err != nil || n <= 0 {
@@ -108,7 +108,7 @@ func Play_nim(user_ip string, argv []string) string {
 			}
 			return re
 		} else {
-			return "目前沒有執行中的 nim, 試試使用 \"nim new <number>\"!"
+			return "目前沒有執行中的 nim2, 試試使用 \"nim2 new <number>\"!"
 		}
 	}
 	return "出現錯誤!"
