@@ -24,6 +24,7 @@ import (
 	games "local-packages/games"
 	grabthirty "local-packages/grabthirty"
 	nim "local-packages/nim"
+	nim2 "local-packages/nim2"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
