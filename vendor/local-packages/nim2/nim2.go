@@ -31,6 +31,7 @@ func New_game(user_ip string, n int) string {
 	}
 	arr := make(map[int]bool)
 	amount := Rnd(lim - 2) + 2
+	return "A"
 	for i := 0; i < amount; i++ {
 	    now := Rnd(lim) + 1
 	    _, has := arr[now]
