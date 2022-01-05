@@ -104,6 +104,20 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				argv := parse_command(message.Text)
 				client_ip := get_ip(r)
 				switch argv[0] {
+				case "help":
+				    var help_msg string
+				    help_msg += "目前支援的功能有:\n"
+				    help_msg += "小遊戲:\n"
+				    help_msg += "1. guessnumber\n"
+				    help_msg += "2. nim\n"
+				    help_msg += "3. nim2\n"
+				    help_msg += "4. grabthirty\n"
+				    help_msg += "小工具:\n"
+				    help_msg += "1.抽\n"
+				    help_msg += "1.random"
+				    if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(help_msg, img_url)).Do(); err != nil {
+						log.Print(err)
+					}
 				case "抽":
 					search := argv[1]
 					html_body := draw_picture.Get_html("https://tw.images.search.yahoo.com/search/images?p=" + search)
@@ -111,7 +125,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(img_url, img_url)).Do(); err != nil {
 						log.Print(err)
 					}
-
 				case "猜數字", "guessnumber", "GuessNumber", "gn":
 					msg := games.GuessNumber(client_ip, argv)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
@@ -152,7 +165,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				default:
-					reply_string := argv[0]
+					reply_string := "錯誤指令，使用 \"help\" 取得更多資訊"
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_string)).Do(); err != nil {
 						log.Print(err)
 					}
