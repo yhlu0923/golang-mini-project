@@ -42,10 +42,9 @@ func get_ip(r *http.Request) string {
 
 func parse_command(command string) []string {
 	command = command + " "
-	command = strings.ToLower(command)
 	command = strings.Replace(command, "\t", " ", -1)
 
-	var arg []string
+	var argv []string
 	last := -1
 	for {
 		idx := strings.Index(command[last+1:], " ")
@@ -54,11 +53,14 @@ func parse_command(command string) []string {
 		}
 		idx += last + 1
 		if idx-last > 1 {
-			arg = append(arg, command[last+1:idx])
+			argv = append(argv, command[last+1:idx])
 		}
 		last = idx
 	}
-	return arg
+	if len(argv) != 0 {
+    	command = strings.ToLower(argv[0])
+    }
+	return argv
 }
 
 func initialization() {
@@ -114,7 +116,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
 					}
-				case "nim", "Nim":
+				case "nim":
 					msg := nim.Play_nim(client_ip, argv)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
