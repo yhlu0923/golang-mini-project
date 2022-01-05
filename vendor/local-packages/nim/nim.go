@@ -29,9 +29,9 @@ func New_game(user_ip string, n int) string {
 func Play_nim(user_ip string, argv []string) string {
     if len(argv) > 1 && argv[1] == "--help" { // rule
         rule := ""
-        rule += "使用 nim new <number> 來開始一個初始為 <number> 顆石頭的遊戲\n"
-        rule += "使用 nim take <number> 取走 <number> 顆石頭\n"
-        rule += "將石頭拿光者勝"
+        rule += "1. 使用 \"nim new <number>\" 來開始一個初始為 <number> 顆石頭的遊戲\n"
+        rule += "2. 使用 \"nim take <number>\" 取走 <number> 顆石頭\n"
+        rule += "3. 將石頭拿光者勝"
         return rule
     }
 	if len(argv) < 3 || (argv[1] != "new" && argv[1] != "take") {
