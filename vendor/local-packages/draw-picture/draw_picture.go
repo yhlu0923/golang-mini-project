@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"time"
+	"math/rand"
 )
 
 func Get_html(url string) string {
