@@ -115,7 +115,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				    help_msg += "小工具:\n"
 				    help_msg += "1.抽\n"
 				    help_msg += "1.random"
-				    if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(help_msg, img_url)).Do(); err != nil {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(help_msg)).Do(); err != nil {
 						log.Print(err)
 					}
 				case "抽":
