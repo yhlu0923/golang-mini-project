@@ -29,7 +29,6 @@ func New_game(user_ip string, n int) string {
 	if lim > 10 {
 	    lim = 10
 	}
-	return "A"
 	arr := make(map[int]bool)
 	amount := Rnd(lim - 2) + 2
 	for i := 0; i < amount; i++ {

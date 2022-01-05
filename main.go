@@ -66,6 +66,7 @@ func parse_command(command string) []string {
 
 func initialization() {
 	nim.Init()
+	nim2.Init()
 	games.Init()
 	grabthirty.Init()
 }
