@@ -32,6 +32,7 @@ func Play_nim(user_ip string, argv []string) string {
         rule += "使用 nim new <number> 來開始一個初始為 <number> 顆石頭的遊戲\n"
         rule += "使用 nim take <number> 取走 <number> 顆石頭\n"
         rule += "將石頭拿光者勝"
+        return rule
     }
 	if len(argv) < 3 || (argv[1] != "new" && argv[1] != "take") {
 		return "使用方法: nim new|take <number>"
