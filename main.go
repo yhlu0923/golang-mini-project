@@ -58,7 +58,7 @@ func parse_command(command string) []string {
 		last = idx
 	}
 	if len(argv) != 0 {
-    	command = strings.ToLower(argv[0])
+    	argv[0] = strings.ToLower(argv[0])
     }
 	return argv
 }
