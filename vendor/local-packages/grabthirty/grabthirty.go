@@ -74,7 +74,7 @@ func GrabThirty(user_ip string, argv []string) string {
 		InfoMap[user_ip] = game_info
 
 		if reply_nums[replyNumLen-1] == game_info.TargetNumber {
-			return fmt.Sprintf("I win the game!, I grabbed %d, you losed", game_info.TargetNumber)
+			return fmt.Sprintf("I win the game! You grabbed %d, you losed", game_info.TargetNumber)
 		}
 
 		msg := Bot_move(user_ip, reply_nums)

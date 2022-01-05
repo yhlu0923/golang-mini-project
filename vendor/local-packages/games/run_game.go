@@ -33,6 +33,13 @@ func GuessNumber(user_ip string, argv []string) string {
 	}
 
 	if argv[1] == "new" {
+		if len(argv) >= 3 {
+			num, err := strconv.Atoi(string(argv[2])) //string to int,并作输入格式判断
+			if err != nil {
+				return "new 後面的要接數字"
+			}
+			EndNum = int(num)
+		}
 		delete(InfoMap, user_ip)
 		var game_info GameInfo
 		game_info.AnswerNum = CreateRandomNumber(EndNum)
