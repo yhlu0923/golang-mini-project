@@ -37,6 +37,11 @@ func Parse(body string) string {
 	body = strings.Replace(body, "\n", "", -1)
 	img_reg := regexp.MustCompile(`<img class=(.*?)>`)
 	src_reg := regexp.MustCompile(`src="(.*?)"`)
-	img_url := src_reg.FindAllStringSubmatch(img_reg.FindAllStringSubmatch(body, -1)[1][1], -1)[0][1]
+	img_url := src_reg.FindAllStringSubmatch(img_reg.FindAllStringSubmatch(body, -1)[Rnd(5) + 1][1], -1)[0][1]
 	return img_url
+}
+
+func Rnd(endNum int) int {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	return r.Intn(endNum)
 }
