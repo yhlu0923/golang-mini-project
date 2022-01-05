@@ -1,4 +1,4 @@
-package main
+package draw_picture
 
 import (
 	"net/http"
