@@ -117,8 +117,8 @@ func Bot_move(user_ip string, reply_nums []int) string {
 	} else {
 		tmp_num := 0
 		for i := 0; i < len(goodnumber); i++ {
-			if game_info.LastRecordNumber-game_info.TargetNumber > 0 {
-				tmp_num = game_info.LastRecordNumber - game_info.TargetNumber
+			if goodnumber[i]-game_info.LastRecordNumber > 0 {
+				tmp_num = goodnumber[i] - game_info.LastRecordNumber
 				break
 			}
 		}
