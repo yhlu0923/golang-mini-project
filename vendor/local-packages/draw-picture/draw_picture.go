@@ -1,6 +1,7 @@
 package draw_picture
 
 import (
+    "fmt"
 	"net/http"
 	"io/ioutil"
 	"regexp"
@@ -32,7 +33,7 @@ func Parse(body string) string {
 	img_reg := regexp.MustCompile(`<a class="img"    href='(.*?)'aria`)
 	select_idx := img_reg.FindAllStringSubmatch(body, -1)[Rnd(10)][1]
 	
-	body2 := get_html("https://tw.images.search.yahoo.com/" + select_idx)
+	body2 := Get_html("https://tw.images.search.yahoo.com/" + select_idx)
 	body2 = strings.Replace(body2, "\n", "", -1)
 	
 	src_reg := regexp.MustCompile(`<img src=('|")(.*?)&.*?('|")(.*?)>`)
