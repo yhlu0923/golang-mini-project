@@ -29,7 +29,7 @@ func CreateRandomNumber(endNum int) int {
 func GuessNumber(user_ip string, argv []string) string {
 
 	if argv[1] == "--help" {
-		return fmt.Sprintf("1. 使用gb, guessnumber, 猜數字 當作前綴\n2. 根據指示操作就行嚕～")
+		return fmt.Sprintf("1. 使用gn, guessnumber, 猜數字 當作前綴\n2. 根據指示操作就行嚕～")
 	}
 
 	if argv[1] == "new" {
