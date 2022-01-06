@@ -31,7 +31,7 @@ func CreateRandomNumber(endNum int) int {
 func GrabThirty(user_ip string, argv []string) string {
 
 	if argv[1] == "--help" {
-		return fmt.Sprintf("1. 使用gt, grabthirty, 搶30 當作前綴\n2. 從一開始往上喊，一次最多喊三個數字，最後搶到30的人就輸囉～\n3.剩下的根據指示操作就行嚕～")
+		return fmt.Sprintf("1. 使用gt, grabthirty, 搶30 當作前綴\n2. 使用 \"gt new\" 來開始新遊戲\n3. 從一開始往上喊，一次最多喊三個數字，最後搶到30的人就輸囉～\n4. 剩下的根據指示操作就行嚕～")
 	}
 
 	if argv[1] == "new" {
