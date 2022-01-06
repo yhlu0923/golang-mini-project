@@ -120,7 +120,15 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						log.Print(err)
 					}
 				case "抽":
-					search := argv[1]
+				    var search string
+				    for idx, i := range argv {
+                        if idx > 1 {
+                            search += " "
+                        }
+				        if idx != 0 {
+				            search += i
+                        }
+				    }
 					html_body := draw_picture.Get_html("https://tw.images.search.yahoo.com/search/images?p=" + search)
                     img_url := draw_picture.Parse(html_body)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(img_url, img_url)).Do(); err != nil {
