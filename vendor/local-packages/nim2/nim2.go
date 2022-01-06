@@ -151,7 +151,7 @@ func Bot_move(n int, k map[int]bool) int {
 	        }
 	    }
 	}
-	rnd_idx := Rnd(rnd_sz)
+	rnd_idx := Rnd(rnd_sz) + 1
 	for j, _ := range k {
 	    if j <= n {
 	        rnd_idx--
