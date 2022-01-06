@@ -159,8 +159,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					endNum, err := strconv.Atoi(string(argv[1])) //string to int,并作输入格式判断
 					if err != nil {
 						msg = "格式不對，請輸入\"Random (數字)\""
-					} else {
-						msg = fmt.Sprintf("Random number from 0-%d is \"%d\"", endNum, games.CreateRandomNumber(endNum))
+					} else if rndNum <= 0 {
+					    msg = "請輸入正整數"
+					}else {
+						msg = fmt.Sprintf("Random number from 1-%d is \"%d\"", endNum, games.CreateRandomNumber(endNum) + 1)
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Print(err)
