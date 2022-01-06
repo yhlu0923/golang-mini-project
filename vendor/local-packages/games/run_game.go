@@ -15,7 +15,6 @@ type GameInfo struct {
 	AnswerNum int
 }
 
-var EndNum int = 10
 
 func Init() {
 	InfoMap = make(map[string]GameInfo)
@@ -27,10 +26,14 @@ func CreateRandomNumber(endNum int) int {
 }
 
 func GuessNumber(user_ip string, argv []string) string {
-
+    if len(argv) == 1 {
+        return fmt.Sprintf("使用 \"gn --help\" 獲得更多資訊")
+    }
 	if argv[1] == "--help" {
 		return fmt.Sprintf("1. 使用gn, guessnumber, 猜數字 當作前綴\n2. 根據指示操作就行嚕～")
 	}
+	
+    var EndNum int = 10
 
 	if argv[1] == "new" {
 		if len(argv) >= 3 {
