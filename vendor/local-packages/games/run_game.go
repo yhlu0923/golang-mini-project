@@ -34,7 +34,7 @@ func GuessNumber(user_ip string, argv []string) string {
 	    help_msg += "1. 使用 gn, guessnumber, 猜數字 當作前綴\n"
 	    help_msg += "2. 使用 \"gn new <number>\" 來開始新的遊戲\n"
 	    help_msg += "3. 使用 \"gn <number>\" 來猜數字"
-		return fmt.Sprintf()
+		return help_msg
 	}
 	
     var EndNum int = 10
