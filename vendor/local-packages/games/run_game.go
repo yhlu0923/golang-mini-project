@@ -49,9 +49,9 @@ func GuessNumber(user_ip string, argv []string) string {
 		}
 		delete(InfoMap, user_ip)
 		var game_info GameInfo
-		game_info.AnswerNum = CreateRandomNumber(EndNum)
+		game_info.AnswerNum = CreateRandomNumber(EndNum) + 1
 		InfoMap[user_ip] = game_info
-		return fmt.Sprintf("請輸入數字，範圍為: 0-%d", EndNum)
+		return fmt.Sprintf("請輸入數字，範圍為: 1-%d", EndNum)
 	}
 
 	if game_info, ok := InfoMap[user_ip]; ok {
