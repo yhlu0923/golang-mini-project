@@ -123,7 +123,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				    var search string
 				    for idx, i := range argv {
                         if idx > 1 {
-                            search += " "
+                            search += "+"
                         }
 				        if idx != 0 {
 				            search += i
