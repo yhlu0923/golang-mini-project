@@ -66,7 +66,7 @@ func GuessNumber(user_ip string, argv []string) string {
 
 			if command == game_info.AnswerNum {
 				delete(InfoMap, user_ip)
-				return fmt.Sprintf("恭喜你，答對了~, 答案就是%d", game_info.AnswerNum)
+				return fmt.Sprintf("恭喜你，答對了~, 答案就是 %d", game_info.AnswerNum)
 			} else if command < game_info.AnswerNum {
 				return fmt.Sprintf("你輸入的數字(%d)小於生成的數字，别灰心!再来一次~", command)
 			} else if command > game_info.AnswerNum {
