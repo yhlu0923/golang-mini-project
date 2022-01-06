@@ -26,11 +26,14 @@ func New_game(user_ip string, n int) string {
 	}
 	nim_left[user_ip] = n
 	lim := n / 2
+	var alim int
 	if lim > 10 {
-	    lim = 10
+	    alim = 10
+	} else {
+	    alim = lim
 	}
 	arr := make(map[int]bool)
-	amount := Rnd(lim - 2) + 2
+	amount := Rnd(alim - 2) + 2
 	for i := 0; i < amount; i++ {
 	    now := Rnd(lim) + 1
 	    _, has := arr[now]
