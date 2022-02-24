@@ -3,7 +3,7 @@
 ## Our line official account
 - Add friend: 
 	- https://line.me/R/ti/p/@864gkoag
-		<img width="438" alt="image" src="https://user-images.githubusercontent.com/71316718/155491438-cb322998-d0af-480e-b5f3-6eba3dc42add.png">
+	- <img width="438" alt="image" src="https://user-images.githubusercontent.com/71316718/155491438-cb322998-d0af-480e-b5f3-6eba3dc42add.png">
 
 ## Our ideas
 
