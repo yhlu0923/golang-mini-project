@@ -22,7 +22,10 @@ e.g
 我們的聊天機器人就會找一張狗的圖片傳送給使用者
 想看科基就「抽科基」...etc
  -->
- 
+<img width="880" alt="image" src="https://user-images.githubusercontent.com/71316718/155491283-ec5cbf29-70cd-45cc-bad6-d9a74128ae1e.png">
+
 ## Websites/References
 ### Our docs
-- [Proposal -google docs](https://docs.google.com/document/d/1aABZYTMn0zHEEZv0hx9lwJgJoHyGfhfpYisUFBkp4HE/edit?fbclid=IwAR2jdVdHhUc6Q0f48QcIbZRVtAznHmw6OfPVJ6RzYRsgipNdfNOWMD2-IL8)
+<!-- - [Proposal -google docs](https://docs.google.com/document/d/1aABZYTMn0zHEEZv0hx9lwJgJoHyGfhfpYisUFBkp4HE/edit?fbclid=IwAR2jdVdHhUc6Q0f48QcIbZRVtAznHmw6OfPVJ6RzYRsgipNdfNOWMD2-IL8)
+ -->
+ - [Documents](https://drive.google.com/file/d/1H5WIRkkN3MmYkgAnEZE9dqyr_7yLrfpq/view?usp=sharing)
